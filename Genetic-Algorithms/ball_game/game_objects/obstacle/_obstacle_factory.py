@@ -3,17 +3,19 @@ from pygame import Surface
 
 from .__obstacle import Obstacle
 
+from my_constants import OBSTACLE_COLOR
+
+
+##  TODO:  Delete This File.  :v 
+# Add these functionalities in Obstacle class. 
+
 
 class ObstacleFactory:
+    from GameData import obstacle_spawn_pos as INITIAL_POSITION 
+
     WIDTH = 20
     MIN_HEIGHT = 50 
     MAX_HEIGHT = 350 
-
-    color = (0, 0, 1)  # TODO: Make it work
-    
-    @classmethod
-    def set_initial_pos(cls, initial_pos):
-        cls.INITIAL_POSITION = initial_pos 
 
     def get_random_height(self):
         return randint(self.MIN_HEIGHT, self.MAX_HEIGHT) 
@@ -27,8 +29,8 @@ class ObstacleFactory:
         return obstacle 
        
     def initialise_sprite(self, obstacle):
-        obstacle.image = Surface((self.WIDTH, obstacle.height)) 
-        obstacle.image.fill(self.color) 
+        obstacle.image = Surface((self.WIDTH, obstacle.height)).convert_alpha()
+        obstacle.image.fill(OBSTACLE_COLOR) 
         obstacle.rect = obstacle.image.get_rect() 
         obstacle.rect.bottomleft = self.INITIAL_POSITION
     

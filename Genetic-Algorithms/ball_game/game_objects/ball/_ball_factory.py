@@ -3,13 +3,13 @@ import random
 
 
 from .__ball import Ball 
-from .neural_network.network_handler import NetworkHandler
+from neural_network.network_handler import NetworkHandler
 
 class BallFactory:
     def make_ball(self):
         ball = Ball() 
 
-        self.initialise_sprite(ball) 
+        self.initialise_rect(ball) 
         self.initialise_velocity(ball)
         self.initialise_network_handler(ball)  
 
@@ -17,8 +17,8 @@ class BallFactory:
 
 
     @staticmethod
-    def initialise_sprite(ball):
-        ball.image = pygame.image.load("Assets/ball.png") 
+    def initialise_rect(ball):
+        # ball.image is already initialised.  ..Flyweight pattern
         ball.rect = ball.image.get_rect() 
         ball.rect.move_ip(BallFactory.get_initial_pos())  
 
@@ -36,4 +36,4 @@ class BallFactory:
 
     @staticmethod
     def initialise_network_handler(ball):
-        ball.network_handler = NetworkHandler(ball.NETWORK_SIZE) 
+        ball.network_handler = NetworkHandler(parent = ball) 
