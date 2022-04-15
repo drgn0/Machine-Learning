@@ -2,12 +2,13 @@ from pygame.sprite import spritecollide
 
 
 class CollisionHandler:
-    def __init__(self, balls, ground, obstacles, walls):
+    def __init__(self, balls):
         self.balls = balls 
 
-        self.ground = ground 
-        self.obstacles = obstacles 
-        self.walls = walls 
+        import GameData 
+        self.ground = GameData.get_ground()  
+        self.obstacles = GameData.get_obstacles() 
+        self.walls = GameData.get_walls() 
     
     def update(self):
         self.collision_with_obstacles() 

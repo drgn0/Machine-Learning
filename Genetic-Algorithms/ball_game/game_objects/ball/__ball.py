@@ -7,9 +7,9 @@ import game_objects.ball.Physics as Physics
 
 
 class Ball(pygame.sprite.Sprite):
-    # MAX_IMPULSE = pygame.Vector2(4, 15) 
     MAX_VELOCITY = pygame.Vector2(5, 25)
-    NETWORK_SIZE = (2, 4, 2) 
+    image = pygame.image.load("Assets/ball.png").convert_alpha()
+    
     def __init__(self):
         super().__init__() 
 

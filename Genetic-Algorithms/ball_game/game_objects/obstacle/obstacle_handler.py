@@ -1,3 +1,4 @@
+import pygame 
 from pygame.sprite import Group 
 
 def get_factory():
@@ -5,46 +6,39 @@ def get_factory():
     return ObstacleFactory() 
 
 
-
-'''
-Classes having access to ObstacleHandler.obstacles Group:
-    CollisionHandler 
-    NetworkHandler 
-(only read access..  (hopefully)) 
-
-
-TODO:  Something called Interface Pattern  ? 
-
-'''
-
 class ObstacleHandler:
     factory = get_factory() 
+    SPAWN_TIME = 2500  # milliseconds 
+    def __init__(self):
+        self.obstacles = Group([])  #  !!  DO NOT CHANGE THIS POINTER  !!  IT'S USED BY OTHER SCRIPTS. 
+        self.score = 0 
+        
 
-    def __init__(self, ground):
-        # takes ground as argument just to get initial position for obstacles 
-        self.factory.set_initial_pos(ground.rect.topright) 
-
-        self.obstacles = Group([])
-        self.spawn_obstacle() 
-
-    
     def get_obstacles(self):
         return self.obstacles 
 
+    def reset(self):
+        # called at start of generation 
+        self.obstacles.empty() 
+
+        from my_constants import SPAWN_OBSTACLE_EVENT
+        pygame.time.set_timer(SPAWN_OBSTACLE_EVENT, self.SPAWN_TIME) 
+        self.spawn_obstacle() 
+
     def spawn_obstacle(self):
+        # called in game.py in handle_events
         obstacle = self.factory.make_obstacle() 
         self.obstacles.add(obstacle)
     
-    def despawn_obstacles(self):
-        # despawns out of bound obstacles 
+    def despawn_out_of_screen_obstacles(self):
         for obstacle in self.obstacles:
             if obstacle.rect.right < 0:
                 self.obstacles.remove(obstacle) 
-
+                self.score += 1 
+        
     def update(self):
         self.obstacles.update() 
-
-        self.despawn_obstacles()  # TODO:  you don't have to check it every frame. 
+        self.despawn_out_of_screen_obstacles() 
     
     def draw(self, window):
         self.obstacles.draw(window) 
