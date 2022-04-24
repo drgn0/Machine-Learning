@@ -30,12 +30,13 @@ class Game:
         self.generation += 1 
         self.obstacle_handler.reset() 
         self.ball_handler.spawn_balls() 
-
+ 
     def simulate_frame(self):
         self.update_stuff() 
         self.draw_stuff() 
 
         pygame.display.update()  # TODO:  optimise 
+        print(self.clock.get_fps())
         self.clock.tick(FPS) 
     
     def update_stuff(self):

@@ -3,7 +3,7 @@ import pygame
 import game_objects.ball.Physics as Physics 
 
 
-
+from GameData import get_score 
 
 
 class Ball(pygame.sprite.Sprite):
@@ -13,10 +13,20 @@ class Ball(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
 
+        self.score = 0 
+        self.is_visible = True 
+        self.is_alive = True 
         self.jump_timer = 0  # can only jump when it's 0 
 
+    def get_network(self):
+        return self.network_handler.network 
+        
     def update(self):
         # called every frame. 
+        if not self.is_alive:
+            print('updating dead ball  ?')
+            return 
+        self.score = get_score() 
         self.update_jump_timer() 
         Physics.update_ball(self)
 
@@ -28,8 +38,6 @@ class Ball(pygame.sprite.Sprite):
             return 
         self.set_jump_timer() 
         
-        # print('jumping.  current vel:', self.velocity) 
-
         desired_vel = self.network_handler.get_desired_vel() 
         self.set_velocity(desired_vel)
 

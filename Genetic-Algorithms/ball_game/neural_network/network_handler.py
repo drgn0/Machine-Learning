@@ -3,18 +3,28 @@ from pygame.math import Vector2
 from ._network import Network 
 
 
-NETWORK_SIZE = (2, 4, 2) 
+import GameData 
+
+def get_network_mutator():
+    from ._network_mutator import NetworkMutator 
+    return NetworkMutator() 
 
 class NetworkHandler:
     from GameData import WINDOW_SIZE as screen_size 
-    obstacles = None 
+    from my_constants import NETWORK_SIZE
+    # obstacles = None 
+    network_mutator = get_network_mutator() 
 
     MIN_JUMP = 7
     MAX_JUMP = 14 
-    X_MULTIPLIER = 4
+    X_MULTIPLIER = 5
     
-    def __init__(self, parent):
-        self.network = Network(NETWORK_SIZE)
+    def __init__(self, parent, network = None):
+        if network is None:
+            self.network = Network(self.NETWORK_SIZE) 
+        else:
+            self.network = self.network_mutator.mutate_network(network) 
+            
         self.parent = parent 
 
     def get_desired_vel(self):
@@ -40,7 +50,7 @@ class NetworkHandler:
     def get_next_obstacle(self, pos):
         # indexing doesn't work on obstacles.
         # and i don''t wanna use extra space ..(don't ask why) 
-        obstacles_ahead = filter(lambda obstacle: obstacle.rect.centerx > pos, self.obstacles)
+        obstacles_ahead = filter(lambda obstacle: obstacle.rect.centerx > pos, GameData.get_obstacles())
         return min(
             obstacles_ahead, 
             key = lambda obstacle: obstacle.rect.centerx
@@ -49,9 +59,15 @@ class NetworkHandler:
 
 
     def preprocess(self, obstacle_distance, obstacle_height):
+        x = obstacle_distance / self.screen_size.x
+        y = obstacle_height / self.screen_size.y
+
+        x -= 0.5 
+        y -= 0.5 
+
         return (
-            5 * obstacle_distance / self.screen_size.x, 
-            5 * obstacle_height / self.screen_size.y
+            5 * x, 
+            5 * y
         )
     
 
