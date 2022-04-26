@@ -11,12 +11,14 @@ class ObstacleHandler:
     SPAWN_TIME = 2500  # milliseconds 
     def __init__(self):
         self.obstacles = Group([])  #  !!  DO NOT CHANGE THIS POINTER  !!  IT'S USED BY OTHER SCRIPTS. 
-        self.score = 0 
+        self.score = 1  # to make sure balls doesn't have zero score.. i.e, zero chances of getting selected
         
-
     def get_obstacles(self):
         return self.obstacles 
 
+    def get_score(self):
+        return self.score 
+        
     def reset(self):
         # called at start of generation 
         self.obstacles.empty() 

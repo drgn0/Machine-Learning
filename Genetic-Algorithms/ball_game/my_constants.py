@@ -4,16 +4,14 @@ from pygame import Vector2
 FPS = 60 
 WINDOW_SIZE = Vector2(900, 550) 
 
-POPULATION = 10 
+NETWORK_SIZE = (2, 4, 2) 
+POPULATION = 1000
+# NO_OF_VISIBLE_BALLS = 50
+
+MUTATION_CHANCES = 0.1 
+MUTATION_MAGNITUDE = 0.2 
 
 # colors 
-'''
-BLACK = (0, 0, 0) 
-WHITE = (255, 255, 255) 
-RED = (255, 0, 0) 
-GREEN = (0, 255, 0) 
-BLUE = (0, 0, 255) 
-''' 
 BACKGROUND_COLOR = (255, 255, 255)
 GROUND_COLOR = (0, 0, 0)
 WALL_COLOR = (0, 0, 0) 
