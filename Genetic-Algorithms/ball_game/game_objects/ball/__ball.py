@@ -13,7 +13,8 @@ class Ball(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
 
-        self.score = 0 
+        self.score = 0
+
         self.is_visible = True 
         self.is_alive = True 
         self.jump_timer = 0  # can only jump when it's 0 
@@ -23,9 +24,7 @@ class Ball(pygame.sprite.Sprite):
         
     def update(self):
         # called every frame. 
-        if not self.is_alive:
-            print('updating dead ball  ?')
-            return 
+        assert(self.is_alive) 
         self.score = get_score() 
         self.update_jump_timer() 
         Physics.update_ball(self)
