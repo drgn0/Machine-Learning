@@ -28,6 +28,8 @@ class Game:
     
     def update_generation(self):
         self.generation += 1 
+        print("Generation:", self.generation)
+        
         self.obstacle_handler.reset() 
         self.ball_handler.spawn_balls() 
  
@@ -36,7 +38,7 @@ class Game:
         self.draw_stuff() 
 
         pygame.display.update()  # TODO:  optimise 
-        print(self.clock.get_fps())
+        # print(self.clock.get_fps())
         self.clock.tick(FPS) 
     
     def update_stuff(self):
@@ -53,4 +55,3 @@ class Game:
 if __name__ == '__main__':
     game = Game() 
     game.game_loop() 
-

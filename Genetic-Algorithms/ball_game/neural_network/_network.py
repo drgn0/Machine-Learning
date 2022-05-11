@@ -14,7 +14,7 @@ class Network:
         sizes = self.sizes 
         self.weights = [np.random.standard_normal((x, y)) for x, y in zip(sizes[1:], sizes[:-1])] 
         self.biases = [np.random.standard_normal((x, 1)) for x in sizes[1:]] 
-    
+        
     def feedforward(self, x):
         x = np.reshape(x, (self.sizes[0], 1))
         

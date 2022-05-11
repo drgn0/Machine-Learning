@@ -9,15 +9,19 @@ class BallFactory:
     def get_random_balls(self, N):
         return pygame.sprite.Group([self.get_ball() for i in range(N)]) 
     
-    def get_mutated_balls(self, balls):
+    def get_mutated_balls(self, balls):  # TODO:  is this function supposed to be here  ??
         balls = tuple(balls) 
-        ball_scores = [ball.score for ball in balls] 
+        ball_scores = [(ball.score ** 2) / max(2, ball.network_handler.get_mean_of_sq_of_weights()) for ball in balls] 
+        print('Best Score:', max([ball.score for ball in balls]) - 1)
+        # print(ball_scores, '\n') 
 
-        balls = random.choices(balls, ball_scores, k=len(balls)) 
-        
-        return pygame.sprite.Group([
-            self.get_ball(ball.get_network()) for ball in balls 
-        ])
+        random_balls_count = len(balls) // 50 
+        balls = random.choices(balls, ball_scores, k=len(balls)-random_balls_count) 
+
+        return pygame.sprite.Group(
+            [self.get_ball(ball.get_network()) for ball in balls], 
+            [self.get_ball() for i in range(random_balls_count)]
+        )
 
 
     def get_ball(self, network = None):

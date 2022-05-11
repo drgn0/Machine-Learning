@@ -18,36 +18,31 @@ class NetworkMutator:
     def mutate_network(self, network):
         new_network = Network(
             network.sizes, 
-            self.mutate_arr(network.weights), 
-            self.mutate_arr(network.biases) 
+            self.mutate_list(network.weights), 
+            self.mutate_list(network.biases) 
         )
 
         # print(type(network.weights[0]), type(new_network.weights[0]))
         assert(not (network.weights[0] is new_network.weights[0]))
         return new_network
 
+    def mutate_list(self, list_):
+        result = [self.mutate_arr(row) for row in list_] 
+
+        # print("Mutating") 
+        # print(list_[0]) 
+        # print('\n', result[0]) 
+
+        return result
+
     def mutate_arr(self, arr):
-        # TODO:  !!  REWORK  !!
-        if isinstance(arr, list):
-            return [self.mutate_arr(row) for row in arr] 
-        
-        if not isinstance(arr, np.ndarray):
-            # arr is actually a float 
-            assert(isinstance(arr, np.float64))
-            return self.mutate_float(arr) 
-
-        new_arr = arr.copy()
-        for i, x in enumerate(new_arr):
-            new_arr[i] = self.mutate_arr(x) 
-
-        if not is_equal(arr, new_arr):
-            pass 
-            # print(*zip(arr, new_arr))
-            # print(arr, '\n', new_arr, '\n\n\n') 
-
+        assert(len(arr.shape) == 2) 
+        new_arr = arr.copy() 
+        for i in range(new_arr.shape[0]):
+            for j in range(new_arr.shape[1]):
+                new_arr[i][j] = self.mutate_float(new_arr[i][j]) 
         return new_arr 
-    
-    
+        
     def mutate_float(self, x):
         if random.random() < self.MUTATION_CHANCES:
             return x * (1 + self.MUTATION_MAGNITUDE * (random.random() - random.random())) 
