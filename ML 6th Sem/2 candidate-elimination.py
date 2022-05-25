@@ -1,4 +1,3 @@
-import numpy as np 
 import pandas as pd
 
 def learn(attributes, target): 
@@ -23,17 +22,16 @@ def learn(attributes, target):
     
     return specific_h, general_h 
 
-data = pd.read_csv("datasets/loan.csv").iloc[:3]
 
+data = pd.read_csv("datasets/loan.csv").iloc[:3]
 print(data)
  
-attributes = np.array(data)[:,:-1]
+attributes = data.iloc[:, :-1].values
 print("The attributes are:\n", attributes)
  
-target = np.array(data)[:,-1]
+target = data.iloc[:,-1].values
 print("The targets are:\n ", target)
  
-
 
 
 specifics, generals = learn(attributes, target)
