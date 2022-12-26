@@ -7,7 +7,7 @@ from GameData import get_score
 
 
 class Ball(pygame.sprite.Sprite):
-    MAX_VELOCITY = pygame.Vector2(5, 25)
+    from my_constants import MAX_VELOCITY_BALL 
     image = pygame.image.load("Assets/ball.png").convert_alpha()
     
     def __init__(self):
@@ -30,7 +30,7 @@ class Ball(pygame.sprite.Sprite):
         Physics.update_ball(self)
 
     def set_velocity(self, new_vel):
-        self.velocity = clamp_vector2(new_vel, self.MAX_VELOCITY)
+        self.velocity = clamp_vector2(new_vel, self.MAX_VELOCITY_BALL)
     
     def jump(self):
         if not self.can_jump():

@@ -8,7 +8,7 @@ def get_factory():
 
 class ObstacleHandler:
     factory = get_factory() 
-    SPAWN_TIME = 3500  # milliseconds 
+    from my_constants import OBSTACLE_SPAWN_TIME 
     def __init__(self):
         self.obstacles = Group([])  #  !!  DO NOT CHANGE THIS POINTER  !!  IT'S USED BY OTHER SCRIPTS. 
         self.score = 1  # to make sure balls doesn't have zero score.. i.e, zero chances of getting selected
@@ -25,7 +25,7 @@ class ObstacleHandler:
         self.score = 1 
         
         from my_constants import SPAWN_OBSTACLE_EVENT
-        pygame.time.set_timer(SPAWN_OBSTACLE_EVENT, self.SPAWN_TIME) 
+        pygame.time.set_timer(SPAWN_OBSTACLE_EVENT, self.OBSTACLE_SPAWN_TIME) 
         self.spawn_obstacle() 
 
     def spawn_obstacle(self):
